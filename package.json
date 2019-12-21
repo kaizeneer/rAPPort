@@ -1,0 +1,41 @@
+{
+  "name": "rapport",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "author": "Stefan Kirchmair",
+  "dependencies": {
+    "cordova-android": "^8.1.0",
+    "cordova-browser": "^6.0.0",
+    "cordova-pdf-generator": "1.9.3",
+    "cordova-plugin-compat": "^1.2.0",
+    "cordova-plugin-datetimepicker": "1.1.2",
+    "cordova-plugin-file": "^4.3.3",
+    "cordova-plugin-spinner": "^1.1.0",
+    "cordova-plugin-statusbar": "2.4.0",
+    "cordova-plugin-x-socialsharing": "5.6.3",
+    "es6-promise-plugin": "4.2.2",
+    "jq-signature": "^2.0.0"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-file": {},
+      "cordova-plugin-spinner": {},
+      "cordova-plugin-whitelist": {},
+      "es6-promise-plugin": {},
+      "cordova-plugin-datetimepicker": {},
+      "cordova-plugin-x-socialsharing": {
+        "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
+      },
+      "cordova-pdf-generator": {},
+      "cordova-plugin-statusbar": {}
+    },
+    "platforms": [
+      "browser",
+      "android"
+    ]
+  },
+  "devDependencies": {
+    "cordova-plugin-whitelist": "1.2.2"
+  }
+}

@@ -1,0 +1,67 @@
+label {
+    white-space: nowrap;
+    /*min-width: 110px;*/
+}
+
+.ui-navbar li .ui-btn {
+    font-size: 1em;
+    font-weight: normal;
+    padding: 0.4em;
+}
+
+.noshadow * {
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.ui-field-contain {
+    padding: 0.8em 0 0 0;
+    border: none;
+}
+
+.ui-mini .ui-field-contain fieldset.ui-controlgroup legend small {
+    color: #666;
+}
+
+#contacts thead th,
+#contacts tbody tr:last-child {
+    border-bottom: 1px solid #d6d6d6; /* non-RGBA fallback */
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+#contacts tbody tr:nth-child(odd) td,
+#contacts tbody tr:nth-child(odd) th {
+    background-color: #eeeeee; /* non-RGBA fallback  */
+    background-color: rgba(0,0,0,.04);
+}
+
+#signature {
+    padding-top: 1px;
+}
+
+.jSignature {
+    background-color: white !important;
+    border: 1px solid rgb(221,221,221) !important;
+    border-radius: 5px;
+}
+
+.ui-datebox-datebox-group .ui-input-text {
+    border: none;
+}
+
+.ui-datebox-datebox-group input {
+    text-align: center;
+    font-size: 16px !important;
+}
+
+/*Text Areas*/
+
+#material {
+    overflow-y: auto;
+}
+
+#rawhtml, #base64Helper, #emailMessage {
+    height: 11em !important;
+    overflow-y: auto;
+}

@@ -1,0 +1,208 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <title>rAPPort</title>
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="css/libs/jtsage-datebox.min.css" />
+    
+    <link rel="stylesheet" href="css/app.css" />
+</head>
+
+<body>
+    <div data-role="page" id="testpage" class="noshadow">
+        <div data-role="content" id="tabscontent">
+            <div data-role="tabs" id="tabs">
+                <div data-role="navbar" id="nav">
+                    <ul>
+                        <li>
+                            <a id="customerMenu" class="ui-btn-active" href="#customerTab" data-ajax="false">Kunde</a>
+                        </li>
+                        <li>
+                            <a id="timeAndMaterialMenu" href="#timeAndMaterialTab" data-ajax="false">Aufwand</a>
+                        </li>
+                        <li>
+                            <a id="signatureMenu" href="#signatureTab" data-ajax="false">Unterschrift</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="customerTab">
+                    <form id="editContact" method="post">
+                        <h2 id="currentAction"></h2>
+                        <div class="ui-field-contain">
+                            <label for="name">Name:</label>
+                            <input data-clear-btn="true" type="text" required="required" id="name" name="name" placeholder="z.B. Max Muster" />
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="address">Adresse:</label>
+                            <input data-clear-btn="true" type="text" id="address" required="required" name="address" placeholder="z.B. Hinterholz 8" />
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="zipCode">Postleitzahl:</label>
+                            <input data-clear-btn="true" type="number" required="required" id="zipCode" name="zipCode" placeholder="z.B. 6020" />
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="zipCode">Ort:</label>
+                            <input data-clear-btn="true" type="text" required="required" id="city" name="city" placeholder="z.B. Innsbruck" />
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="email">E-Mail:</label>
+                            <input data-clear-btn="true" type="email" id="email" name="email" placeholder="z.B. max.muster@example.org" />
+                        </div>
+                        <div class="ui-field-contain">
+                            <input type="button" class="btn btn-primary" id="btnSave" name="btnSave" value="Speichern" />
+                        </div>
+                    </form>
+                    <h2>Stammkunden</h2>
+                    <table data-role="table" data-filter="true" data-filter-placeholder="Durchsuchen..." id="contacts" data-mode="reflow" class="ui-responsive">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Ort</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="timeAndMaterialTab">
+                    <form method="post">
+                        <h2>Aufwand</h2>
+                        <div class="ui-field-contain">
+                            <label for="startTime">Startzeit:</label>
+                            <input type="text" id="startTime" name="startTime" required="required" data-role="datebox" data-options='{"mode":"datetimebox", "popupPosition":"window", "useLang":"de", "minuteStep":"15", "usePlaceholder":"Startzeit", "useClearButton":"true", "popupButtonPosition":"right"}'>
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="endTime">Endzeit:</label>
+                            <input type="text" id="endTime" name="endTime" required="required" data-role="datebox" data-options='{"mode":"datetimebox", "popupPosition":"window", "useLang":"de", "minuteStep":"15", "usePlaceholder":"Endzeit", "useClearButton":"true", "popupButtonPosition":"right"}'>
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="service">Dienstleistung:</label>
+                            <textarea id="serviceDescription" name="serviceDescription" placeholder="Dienstleistung" required="required"></textarea>
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="textarea-12">Material:</label>
+                            <textarea id="material" name="material" placeholder="Verbrauchtes Material"></textarea>
+                        </div>
+                        <div class="ui-field-contain">
+                            <input type="reset" class="btn btn-default" id="btnReset" name="btnReset" value="Zurücksetzen" />
+                        </div>
+                    </form>
+                </div>
+                <div id="signatureTab">
+                    <form method="post">
+                        <h2>Unterschrift</h2>
+                        <div class="ui-field-contain">
+                            <label for="signature">Bitte hier unterschreiben:</label>
+                            <div id="signature"></div>
+                        </div>
+                        <div class="ui-field-contain">
+                            <label for="service">Unterzeichnet von:</label>
+                            <input type="text" id="signatureName" name="signatureName" placeholder="Bitte geben Sie Ihren Namen ein" required="required">
+                        </div>
+                        <div class="ui-field-contain">
+                            <button type="button" class="btn btn-default clear" id="copyName">Name übernehmen</button>
+                            <button type="button" class="btn btn-default clear" id="clearSignature">Unterschrift löschen</button>
+                            <button type="button" class="btn btn-primary" id="sendPdfPerMail">PDF per E-Mail senden</button>
+                        </div>
+                        <div data-role="collapsibleset" data-theme="a" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-iconpos="right">
+                            <div id="settings" data-role="collapsible" data-collapsed-icon="gear" data-expanded-icon="delete">
+                                <h3>PDF Template bearbeiten</h3>
+
+                                <div class="ui-field-contain">
+                                    <label for="engineer">Techniker:</label>
+                                    <input data-clear-btn="true" type="text" required="required" id="engineer" name="engineer" placeholder="z.B. Daniel Düsentrieb" />
+                                </div>
+                                <div class="ui-field-contain">
+                                    <label for="ccMail">E-Mail CC:</label>
+                                    <input data-clear-btn="true" type="text" required="required" id="ccMail" name="ccMail" placeholder="z.B. dd@example.org" />
+                                </div>
+                                <div class="ui-field-contain">
+                                    <label for="receiptStartNr">R# Startnummer.:</label>
+                                    <input data-clear-btn="true" type="number" required="required" id="receiptStartNr" name="receiptStartNr" placeholder="z.B. 1000" />
+                                </div>
+                                <div class="ui-field-contain">
+                                    <label for="receiptNrStep">R# Schrittweite:</label>
+                                    <input data-clear-btn="true" type="number" step="1" required="required" id="receiptNrStep" name="receiptNrStep" placeholder="z.B. 2" />
+                                </div>
+                                <div class="ui-field-contain">
+                                    <label for="nextReceiptNr">Nächste R#:</label>
+                                    <input type="number" readonly="readonly" id="nextReceiptNr" name="nextReceiptNr" placeholder="readonly" />
+                                </div>
+                                <div class="ui-field-contain">
+                                    <label for="emailSubject">Betreff:</label>
+                                    <input data-clear-btn="true" type="text" required="required" id="emailSubject" name="emailSubject" placeholder="Betreff" />
+                                </div>
+                                <div class="ui-field-contain">
+                                    <label for="emailMessage">Nachricht:</label>
+                                    <textarea data-clear-btn="true" id="emailMessage" name="emailMessage" required="required" placeholder="Nachricht"></textarea>
+                                </div>
+                                <div class="ui-field-contain">
+                                    <label for="rawhtml">PDF Template:</label>
+                                    <textarea class="form-control" id="rawhtml" name="html" placeholder="Folgende Platzhalter können verwendet werden: @@NAME@@, @@ADRESSE@@, @@POSTLEITZAHL@@, @@ORT@@, @@STARTZEIT@@, @@ENDZEIT@@, @@DIENSTLEISTUNG@@, @@MATERIAL@@, @@UNTERSCHRIFT@@"></textarea>
+
+                                    <span style="float:right; padding-top: 10px;">
+                                        <a id="resetToDefault" class="btn btn-default" href="#confirmResetToDefaultDialog" data-rel="popup" data-position-to="window" data-transition="none">Standard PDF Template</a>
+                                    </span>
+
+                                    <label for="rawhtml" style="padding-top:10px; display:none;">Base64 Output (readonly):</label>
+                                    <textarea class="form-control" id="base64Helper" name="base64Helper" readonly="readonly" style="display:none;"></textarea>
+                                </div>
+                                <div class="ui-field-contain">
+                                    <button type="button" class="btn btn-default" id="generatePdf">PDF Vorschau</button>
+                                    <input type="button" class="btn btn-primary" id="savePdfTemplate" name="savePdfTemplate" value="Speichern" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <br />
+            </div>
+        </div>
+
+        <div data-role="popup" id="confirmDeleteContactDialog" data-overlay-theme="b" data-theme="a" data-dismissible="false">
+            <div data-role="header" data-theme="a">
+                <h3>Löschen?</h3>
+            </div>
+            <div role="main" class="ui-content">
+                <h3 class="ui-title">Sicher, dass <span id="contactName">dieser Datensatz</span> gelöscht werden soll?</h3>
+                <p>Die Aktion kann nicht rückgängig gemacht werden.</p>
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" data-rel="back">Abbrechen</a>
+                <a href="#" id="confirmDeleteContactButton" class="ui-btn ui-corner-all ui-shadow ui-btn-inline delete" data-rel="back" data-transition="none">Ja, löschen</a>
+            </div>
+        </div>
+
+        <div data-role="popup" id="confirmResetToDefaultDialog" data-overlay-theme="b" data-theme="a" data-dismissible="false">
+            <div data-role="header" data-theme="a">
+                <h3>Zurücksetzen?</h3>
+            </div>
+            <div role="main" class="ui-content">
+                <h3 class="ui-title">Sicher, dass das aktuelle PDF Template mit den Standardeinstellungen überschrieben werden soll?</h3>
+                <p>Die Aktion kann nicht rückgängig gemacht werden.</p>
+                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" data-rel="back">Abbrechen</a>
+                <a href="#" id="confirmResetToDefaultButton" class="ui-btn ui-corner-all ui-shadow ui-btn-inline delete" data-rel="back" data-transition="none">Ja, zurücksetzen</a>
+            </div>
+        </div>
+
+    </div>
+    <script src="cordova.js"></script>
+
+    <script src="scripts/libs/jquery.min.js"></script>
+    <script src="scripts/libs/jquery.mobile-1.4.5.min.js"></script>
+    <script src="scripts/libs/jtsage-datebox.min.js"></script>
+    <script src="scripts/libs/jtsage-datebox.de.js"></script>
+    <script src="scripts/libs/jSignature.min.js"></script>
+    <script src="scripts/libs/dexie.min.js"></script>
+
+    <script src="scripts/customer.js"></script>
+    <script src="scripts/signature.js"></script>
+    <script src="scripts/pdfGenerator.js"></script>
+    <script src="scripts/index.js"></script>
+</body>
+</html>

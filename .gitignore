@@ -1,0 +1,11 @@
+### Visual Studio Code ###
+
+.vscode/*
+
+
+### ApacheCordova ###
+
+bin/*
+node_modules/*
+platforms/*
+plugins/*
